@@ -5,31 +5,29 @@ window.addEventListener("load", initApp); // When the page is loaded, run initAp
 // Function to initialize the Web App
 async function initApp() {
   console.log("initApp: app.js is running 🎉"); // Log to the console that the app is running
-  const teachers = await getTeachers(); // Call the getTeachers function
-  console.log(teachers); // Log the teachers to the console
-  displayTeachersGrid(teachers); // Call the displayTeachersGrid function
+  const posts = await getPosts(); // Call the getPosts function
+  console.log(posts); // Log the posts to the console
+  displayPosts(posts); // Call the displayPosts function with the posts as an argument
 }
 
-async function getTeachers() {
+async function getPosts() {
   const response = await fetch(
-    "https://raw.githubusercontent.com/cederdorff/race/master/data/users.json"
+    "https://headless.cederdorff.dk/wp-json/wp/v2/posts?acf_format=standard"
   ); // Fetch the data from the URL
   const data = await response.json(); // Parse the data as JSON into readable JavaScript objects (array of objects)
   return data; // Return the data
 }
 
-function displayTeachersGrid(teachers) {
-  const teachersGrid = document.querySelector("#teachers-grid");
+function displayPosts(posts) {
+  const postsGrid = document.querySelector("#posts-grid");
 
-  for (const teacher of teachers) {
-    teachersGrid.insertAdjacentHTML(
+  for (const post of posts) {
+    postsGrid.insertAdjacentHTML(
       "beforeend",
       /*html*/ `
           <article class="grid-item">
-            <img src="${teacher.image}" alt="${teacher.name}" />
-            <h2>${teacher.name}</h2>
-            <p>${teacher.title}</p>
-            <a href="mailto:${teacher.mail}">${teacher.mail}</a>
+            <img src="${post.acf.image}" alt="${post.title.rendered}" />
+            <h2>${post.title.rendered}</h2>
           </article>
         `
     );
