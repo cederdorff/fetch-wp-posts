@@ -7,7 +7,7 @@ async function initApp() {
   console.log("initApp: app.js is running 🎉"); // Log to the console that the app is running
   const posts = await getPosts(); // Call the getPosts function
   console.log(posts); // Log the posts to the console
-  displayPosts(posts); // Call the displayPosts function with the posts as an argument
+  displayPostsGrid(posts); // Call the displayPosts function with the posts as an argument
 }
 
 async function getPosts() {
@@ -18,7 +18,7 @@ async function getPosts() {
   return data; // Return the data
 }
 
-function displayPosts(posts) {
+function displayPostsGrid(posts) {
   const postsGrid = document.querySelector("#posts-grid");
 
   for (const post of posts) {
